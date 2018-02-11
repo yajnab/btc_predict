@@ -13,3 +13,14 @@ y=data_feed[1] #Price Value
 
 #plt.plot(x,y) #Plot for Debugging
 #plt.show()  #Plot for Debugging
+
+n = data_feed.shape[0]
+p = data_feed.shape[1]
+
+#Training and Testing Parameters
+train_start = 0
+train_end = int(np.floor(0.8*n))
+test_start = train_end + 1
+test_end = n
+data_train = data_feed[np.arange(train_start, train_end), :]
+data_test = data_feed[np.arange(test_start, test_end), :]
