@@ -87,3 +87,36 @@ mse = tf.reduce_mean(tf.squared_difference(out, Y))
 
 # Optimizer
 opt = tf.train.AdamOptimizer().minimize(mse)
+
+mse_test = []
+
+# Run
+epochs = 10
+for e in range(epochs):
+
+    # Shuffle training data
+    shuffle_indices = np.random.permutation(np.arange(len(y_train)))
+    X_train = X_train[shuffle_indices]
+    y_train = y_train[shuffle_indices]
+
+    # Minibatch training
+    for i in range(0, len(y_train) // batch_size):
+        start = i * batch_size
+        batch_x = X_train[start:start + batch_size]
+        batch_y = y_train[start:start + batch_size]
+        # Run optimizer with batch
+        net.run(opt, feed_dict={X: batch_x, Y: batch_y})
+
+        # Show progress
+        if np.mod(i, 50) == 0:
+            # MSE train and test
+            mse_train.append(net.run(mse, feed_dict={X: X_train, Y: y_train}))
+            mse_test.append(net.run(mse, feed_dict={X: X_test, Y: y_test}))
+            print('MSE Train: ', mse_train[-1])
+            print('MSE Test: ', mse_test[-1])
+            # Prediction
+            pred = net.run(out, feed_dict={X: X_test})
+            line2.set_ydata(pred)
+            plt.title('Epoch ' + str(e) + ', Batch ' + str(i))
+            plt.show()
+            plt.pause(0.0001)
