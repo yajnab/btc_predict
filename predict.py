@@ -4,7 +4,7 @@ import tensorflow as tf
 import matplotlib.pyplot as plt
 
 #Feed the data from csv file
-data_feed=pd.read_csv('data_stocks.csv',usecols = [0,1],skiprows = [0],header=None)
+data_feed=pd.read_csv('../predict_files/data_stocks.csv',usecols = [0,1],skiprows = [0],header=None)
 #print(data_feed) #Print the values(Debugging only)
 
 #Plotting
