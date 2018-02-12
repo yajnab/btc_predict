@@ -7,16 +7,16 @@ from sklearn.preprocessing import MinMaxScaler
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
-#Feed the data from csv file
-data=pd.read_csv('../predict_files/data_stocks.csv')
-#print(data_feed) #Print the values(Debugging only)
+
+# Import data
+data = pd.read_csv('../predict_files/data_stocks.csv')
 
 # Drop date variable
-#data = data.drop(['DATE'], 1)
+data = data.drop(['DATE'], 1)
 
 # Dimensions of dataset
 n = data.shape[0]
-p = data.shape[1]
+#p = data.shape[1]
 
 # Make data a np.array
 data = data.values
@@ -135,4 +135,4 @@ for e in range(epochs):
             pred = net.run(out, feed_dict={X: X_test})
             line2.set_ydata(pred)
             plt.title('Epoch ' + str(e) + ', Batch ' + str(i))
-            plt.pause(0.0001)
+            plt.pause(0.001)
