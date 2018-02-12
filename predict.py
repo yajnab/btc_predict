@@ -8,8 +8,11 @@ import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 #Feed the data from csv file
-data=pd.read_csv('../predict_files/data_stocks.csv',usecols = [0,1],skiprows = [0],header=None)
+data=pd.read_csv('../predict_files/data_stocks.csv')
 #print(data_feed) #Print the values(Debugging only)
+
+# Drop date variable
+#data = data.drop(['DATE'], 1)
 
 # Dimensions of dataset
 n = data.shape[0]
@@ -88,6 +91,20 @@ mse = tf.reduce_mean(tf.squared_difference(out, Y))
 # Optimizer
 opt = tf.train.AdamOptimizer().minimize(mse)
 
+# Init
+net.run(tf.global_variables_initializer())
+
+# Setup plot
+plt.ion()
+fig = plt.figure()
+ax1 = fig.add_subplot(111)
+line1, = ax1.plot(y_test)
+line2, = ax1.plot(y_test * 0.5)
+plt.show()
+
+# Fit neural net
+batch_size = 256
+mse_train = []
 mse_test = []
 
 # Run
@@ -118,5 +135,4 @@ for e in range(epochs):
             pred = net.run(out, feed_dict={X: X_test})
             line2.set_ydata(pred)
             plt.title('Epoch ' + str(e) + ', Batch ' + str(i))
-            plt.show()
             plt.pause(0.0001)
