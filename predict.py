@@ -9,10 +9,10 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 
 # Import data
-data = pd.read_csv('../predict_files/data_stocks.csv')
+data = pd.read_csv('../predict_files/btc.csv')
 
 # Drop date variable
-data = data.drop(['DATE'], 1)
+data = data.drop(['N'], 1)
 
 # Dimensions of dataset
 n = data.shape[0]
